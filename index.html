@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080e1b">
+<title>BPI Service Manager</title>
+<style>
+:root{--bg:#080e1b;--panel:#101a2b;--panel2:#142238;--line:#24344c;--text:#edf3fb;--muted:#91a2b9;--blue:#3988ff;--blue2:#1d65d8;--green:#36c98a;--yellow:#f4bd4f;--red:#ff7373;--shadow:0 18px 50px #0006}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% -10%,#132b4a 0,transparent 38%),var(--bg);color:var(--text);font:14px/1.45 Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1440px;margin:auto;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,#3988ff,#164eaa);display:grid;place-items:center;font-weight:800;font-size:17px;box-shadow:0 8px 24px #1d65d855}.brand h1{font-size:19px;margin:0;letter-spacing:.2px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#15243a;color:var(--text);padding:10px 14px;border-radius:10px;font-weight:650;transition:.15s}.btn:hover{border-color:#4b83ce;background:#1b304e}.btn.primary{background:var(--blue2);border-color:var(--blue);color:white}.btn.primary:hover{background:#2878ed}.btn.danger{color:#ff9a9a;border-color:#673b48;background:#2a1821}.btn.small{padding:7px 10px;font-size:12px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}.stat{background:linear-gradient(145deg,#122039,#0e1828);border:1px solid var(--line);border-radius:14px;padding:16px}.stat .label{color:var(--muted);font-size:12px}.stat .num{font-size:27px;font-weight:750;margin-top:5px;letter-spacing:-.5px}.stat .hint{font-size:11px;color:#7187a3;margin-top:2px}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0 13px}.search{position:relative;flex:1;min-width:230px}.search input{padding-left:39px}.search:before{content:"⌕";position:absolute;left:14px;top:7px;font-size:24px;color:#8da4c3}input,select,textarea{width:100%;background:#0b1525;border:1px solid #2a3c56;border-radius:9px;color:var(--text);padding:11px 12px;outline:none}input:focus,select:focus,textarea:focus{border-color:#438fff;box-shadow:0 0 0 3px #3988ff20}input::placeholder,textarea::placeholder{color:#647891}select{cursor:pointer}textarea{min-height:86px;resize:vertical}.filters{display:flex;gap:8px}.filters select{min-width:155px}.content{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0e1828;box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:780px}th{text-align:left;color:#8fa3bd;font-size:11px;text-transform:uppercase;letter-spacing:.7px;padding:13px 15px;background:#111e31;border-bottom:1px solid var(--line)}td{padding:14px 15px;border-bottom:1px solid #1c2b40;vertical-align:middle}tr:last-child td{border-bottom:0}tbody tr{cursor:pointer}tbody tr:hover{background:#14243a}.ticket{font-weight:750;color:#79b2ff}.sub{font-size:12px;color:var(--muted);margin-top:3px}.status{display:inline-flex;align-items:center;gap:6px;border-radius:30px;padding:5px 9px;font-size:11px;font-weight:700;white-space:nowrap;background:#26354b;color:#c6d5e8}.status:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.s-pendente{background:#3b3020;color:#ffd078}.s-tratamento{background:#172e4d;color:#81baff}.s-cliente{background:#382c20;color:#ffc17c}.s-resolvido{background:#17372f;color:#6ce0ae}.s-fechado{background:#27303c;color:#a9b6c7}.empty{text-align:center;padding:48px 20px;color:var(--muted)}.empty strong{display:block;color:var(--text);font-size:16px;margin-bottom:6px}.foot{display:flex;justify-content:space-between;gap:12px;color:#71839b;font-size:11px;padding:13px 3px}.modal-bg{position:fixed;inset:0;background:#020711c9;backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal-bg.open{display:flex}.modal{width:min(850px,100%);max-height:92vh;overflow:auto;background:#101b2d;border:1px solid #31435e;border-radius:17px;box-shadow:0 30px 90px #000b}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:18px 21px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#101b2d;z-index:2}.modal-head h2{margin:0;font-size:17px}.close{border:0;background:transparent;color:#aebdd0;font-size:24px}.modal-body{padding:20px}.section-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#78aef5;font-weight:800;margin:18px 0 11px}.section-title:first-child{margin-top:0}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;color:#a9b8cb;font-size:12px;margin:0 0 6px}.field.full{grid-column:1/-1}.modal-actions{display:flex;justify-content:space-between;gap:10px;padding:15px 20px;border-top:1px solid var(--line);position:sticky;bottom:0;background:#101b2d}.right-actions{display:flex;gap:8px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail{padding:12px;background:#0b1525;border:1px solid #20324a;border-radius:10px;min-width:0}.detail .k{font-size:10px;color:#8095b1;text-transform:uppercase;letter-spacing:.6px}.detail .v{font-size:13px;margin-top:5px;overflow-wrap:anywhere;display:flex;align-items:center;justify-content:space-between;gap:8px}.detail.wide{grid-column:1/-1}.history{display:flex;flex-direction:column;gap:9px}.history-item{border-left:2px solid #3988ff;padding:4px 0 5px 13px}.history-item time{font-size:11px;color:#8196b1}.history-item p{margin:4px 0 0;white-space:pre-wrap}.history-add{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}.history-add textarea{min-height:52px}.contact-link{color:#85baff;text-decoration:none}.contact-link:hover{text-decoration:underline}.btn-copy{background:#15243a;border:1px solid var(--line);color:#91a2b9;border-radius:6px;padding:2px 8px;font-size:11px;cursor:pointer;transition:.15s}.btn-copy:hover{background:#1d65d8;color:#fff;border-color:#3988ff}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1b3049;border:1px solid #4776ad;color:white;padding:11px 17px;border-radius:10px;box-shadow:var(--shadow);z-index:10;display:none}.toast.show{display:block}.file-hidden{display:none}.note{background:#12243a;border:1px solid #274467;padding:11px 13px;border-radius:10px;color:#a9c6e9;font-size:12px;margin-bottom:14px}
+@media(max-width:760px){.app{padding:15px}.top{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.top-actions .btn{flex:1}.stats{grid-template-columns:repeat(2,1fr);gap:9px}.stat{padding:13px}.stat .num{font-size:23px}.toolbar{align-items:stretch}.search{flex-basis:100%}.filters{width:100%}.filters select{min-width:0;flex:1}.foot{flex-direction:column}.form-grid,.detail-grid{grid-template-columns:1fr}.field.full,.detail.wide{grid-column:auto}.modal-bg{padding:8px}.modal{max-height:96vh}.modal-body{padding:15px}.modal-actions{padding:12px}.modal-actions .btn{padding:9px 11px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><div class="logo">BPI</div><div><h1>BPI Service Manager</h1><p>Gestão e acompanhamento de pedidos de assistência</p></div></div>
+    <div class="top-actions">
+      <button class="btn" id="importBtn">Importar backup</button>
+      <button class="btn" id="exportBackupBtn">Backup completo</button>
+      <button class="btn primary" id="newBtn">＋ Novo pedido SD</button>
+      <input class="file-hidden" type="file" id="importFile" accept=".json,application/json">
+    </div>
+  </header>
+  <section class="stats">
+    <div class="stat"><div class="label">Total de pedidos</div><div class="num" id="totalCount">0</div><div class="hint">Registados na aplicação</div></div>
+    <div class="stat"><div class="label">Pendentes</div><div class="num" id="pendingCount">0</div><div class="hint">A aguardar tratamento</div></div>
+    <div class="stat"><div class="label">Em tratamento</div><div class="num" id="workingCount">0</div><div class="hint">Em acompanhamento</div></div>
+    <div class="stat"><div class="label">Resolvidos / fechados</div><div class="num" id="doneCount">0</div><div class="hint">Pedidos concluídos</div></div>
+  </section>
+  <div class="note">Base de dados local: os registos ficam guardados neste navegador/dispositivo. Usa <b>Backup completo</b> para transferir os dados entre o PC e o telemóvel.</div>
+  <div class="toolbar">
+    <div class="search"><input id="search" placeholder="Pesquisar ticket, balcão, pessoa, telefone, email, série, modelo..."></div>
+    <div class="filters">
+      <select id="statusFilter"><option value="">Todos os estados</option><option>Pendente</option><option>Em tratamento</option><option>A aguardar cliente</option><option>Resolvido</option><option>Fechado</option></select>
+      <select id="districtFilter"><option value="">Todos os órgãos</option></select>
+    </div>
+    <button class="btn" id="excelBtn">↓ Exportar Excel</button>
+  </div>
+  <div class="content">
+    <div class="table-wrap">
+      <table><thead><tr><th>Pedido SD</th><th>Balcão / Local</th><th>Equipamento</th><th>Contacto</th><th>Estado</th><th>Abertura</th></tr></thead><tbody id="ticketRows"></tbody></table>
+      <div class="empty" id="emptyState"><strong>Ainda não existem pedidos</strong>Carrega em “Novo pedido SD” para registares o primeiro ticket.</div>
+    </div>
+  </div>
+  <div class="foot"><span>BPI Service Manager · Gestão local de pedidos</span><span id="recordCount">0 registos</span></div>
+</div>
+
+<div class="modal-bg" id="editModal">
+ <div class="modal">
+  <div class="modal-head"><h2 id="editTitle">Novo pedido SD</h2><button class="close" data-close="editModal">×</button></div>
+  <form id="ticketForm">
+   <div class="modal-body">
+    <div class="section-title">Identificação do pedido</div>
+    <div class="form-grid">
+     <div class="field"><label>N.º Ticket SD *</label><input name="ticket" required placeholder="SD-2026204897"></div>
+     <div class="field"><label>Data de abertura</label><input name="date" type="date"></div>
+     <div class="field"><label>Tipo</label><input name="type" value="MultiFunction Printer"></div>
+     <div class="field"><label>Marca</label><input name="brand" value="Canon"></div>
+     <div class="field"><label>Modelo</label><input name="model" placeholder="Canon iR-ADV 527"></div>
+     <div class="field"><label>N.º de série</label><input name="serial" placeholder="23A16952"></div>
+     <div class="field"><label>Órgão / Balcão</label><input name="branch" placeholder="1791 - BENAVENTE"></div>
+     <div class="field"><label>Local / Morada</label><input name="location" placeholder="Rua, número, localidade..."></div>
+     <div class="field full"><label>Descrição da avaria</label><textarea name="fault" placeholder="Descreve o problema reportado..."></textarea></div>
+    </div>
+    <div class="section-title">Pessoa de contacto</div>
+    <div class="form-grid">
+     <div class="field"><label>Nome do contacto</label><input name="contact" placeholder="Nome completo"></div>
+     <div class="field"><label>Telefone</label><input name="phone" type="tel" placeholder="9xx xxx xxx"></div>
+     <div class="field full"><label>Email</label><input name="email" type="email" placeholder="nome@empresa.pt"></div>
+    </div>
+    <div class="section-title">Acompanhamento</div>
+    <div class="form-grid">
+     <div class="field"><label>Estado</label><select name="status"><option>Pendente</option><option>Em tratamento</option><option>A aguardar cliente</option><option>Resolvido</option><option>Fechado</option></select></div>
+     <div class="field"><label>Data de conclusão</label><input name="closedDate" type="date"></div>
+     <div class="field full"><label>Observações internas</label><textarea name="notes" placeholder="Notas úteis para acompanhamento..."></textarea></div>
+    </div>
+   </div>
+   <div class="modal-actions"><button type="button" class="btn danger" id="deleteBtn" style="display:none">Eliminar pedido</button><div class="right-actions"><button type="button" class="btn" data-close="editModal">Cancelar</button><button class="btn primary" type="submit">Guardar pedido</button></div></div>
+  </form>
+ </div>
+</div>
+
+<div class="modal-bg" id="detailModal">
+ <div class="modal">
+  <div class="modal-head"><h2 id="detailTitle">Detalhe do pedido</h2><button class="close" data-close="detailModal">×</button></div>
+  <div class="modal-body" id="detailBody"></div>
+  <div class="modal-actions"><button class="btn" data-close="detailModal">Fechar</button><div class="right-actions"><button class="btn" id="editFromDetail">Editar pedido</button></div></div>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY='bpi_service_manager_v1';
+let tickets=loadData(), editingId=null, detailId=null;
+function loadData(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
+function save(){localStorage.setItem(KEY,JSON.stringify(tickets));render()}
+function uid(){return 'sd_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmt(d){if(!d)return '—';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d}
+function statusClass(s){return {'Pendente':'s-pendente','Em tratamento':'s-tratamento','A aguardar cliente':'s-cliente','Resolvido':'s-resolvido','Fechado':'s-fechado'}[s]||''}
+function render(){
+ const q=document.getElementById('search').value.trim().toLowerCase(), sf=document.getElementById('statusFilter').value, df=document.getElementById('districtFilter').value;
+ const all=[...tickets].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+ const filtered=all.filter(t=>{const hay=[t.ticket,t.type,t.brand,t.model,t.serial,t.branch,t.location,t.fault,t.contact,t.phone,t.email,t.status,t.notes].join(' ').toLowerCase();return (!q||hay.includes(q))&&(!sf||t.status===sf)&&(!df||t.branch===df)});
+ document.getElementById('totalCount').textContent=tickets.length;
+ document.getElementById('pendingCount').textContent=tickets.filter(t=>t.status==='Pendente').length;
+ document.getElementById('workingCount').textContent=tickets.filter(t=>t.status==='Em tratamento'||t.status==='A aguardar cliente').length;
+ document.getElementById('doneCount').textContent=tickets.filter(t=>t.status==='Resolvido'||t.status==='Fechado').length;
+ document.getElementById('recordCount').textContent=`${filtered.length} de ${tickets.length} registos`;
+ const rows=document.getElementById('ticketRows');rows.innerHTML=filtered.map(t=>`<tr data-id="${esc(t.id)}"><td><div class="ticket">${esc(t.ticket)}</div><div class="sub">${esc(t.fault||'Sem descrição')}</div></td><td><b>${esc(t.branch||'—')}</b><div class="sub">${esc(t.location||'')}</div></td><td>${esc(t.model||t.brand||'—')}<div class="sub">S/N: ${esc(t.serial||'—')}</div></td><td>${esc(t.contact||'—')}<div class="sub">${esc(t.phone||t.email||'')}</div></td><td><span class="status ${statusClass(t.status)}">${esc(t.status||'Pendente')}</span></td><td>${fmt(t.date)}</td></tr>`).join('');
+ document.getElementById('emptyState').style.display=filtered.length?'none':'block';
+ const districts=[...new Set(tickets.map(t=>t.branch).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt'));
+ const sel=document.getElementById('districtFilter'),old=sel.value;sel.innerHTML='<option value="">Todos os órgãos</option>'+districts.map(d=>`<option value="${esc(d)}">${esc(d)}</option>`).join('');sel.value=districts.includes(old)?old:'';
+}
+
+function copyToClipboard(text, label='Texto'){
+ if(!text || text === '—') return;
+ navigator.clipboard.writeText(text).then(()=>{
+  toast(`${label} copiado!`);
+ }).catch(()=>{
+  toast('Erro ao copiar.');
+ });
+}
+
+function openEdit(id=null){
+ editingId=id;const form=document.getElementById('ticketForm');form.reset();
+ const t=id?tickets.find(x=>x.id===id):null;document.getElementById('editTitle').textContent=t?'Editar pedido '+t.ticket:'Novo pedido SD';
+ document.getElementById('deleteBtn').style.display=t?'inline-block':'none';
+ if(t){
+  Object.keys(t).forEach(k=>{if(form.elements[k])form.elements[k].value=t[k]??''});
+ } else {
+  form.elements.ticket.value='SD-20262';
+  form.elements.date.value=new Date().toISOString().slice(0,10);
+  form.elements.type.value='MultiFunction Printer';
+  form.elements.brand.value='Canon';
+  form.elements.status.value='Pendente';
+ }
+ document.getElementById('editModal').classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.getElementById('newBtn').onclick=()=>openEdit();
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+document.getElementById('ticketRows').addEventListener('click',e=>{const tr=e.target.closest('tr[data-id]');if(tr)showDetail(tr.dataset.id)});
+document.getElementById('ticketForm').onsubmit=e=>{
+ e.preventDefault();const f=e.target, data={};['ticket','date','type','brand','model','serial','branch','location','fault','contact','phone','email','status','closedDate','notes'].forEach(k=>data[k]=f.elements[k].value.trim());
+ if(!data.ticket){alert('Indica o número do ticket SD.');return}
+ const duplicate=tickets.find(t=>t.ticket.toLowerCase()===data.ticket.toLowerCase()&&t.id!==editingId);if(duplicate){alert('Já existe um pedido com esse número SD.');return}
+ if(editingId){const idx=tickets.findIndex(t=>t.id===editingId);tickets[idx]={...tickets[idx],...data,updatedAt:new Date().toISOString()}}
+ else{tickets.push({id:uid(),...data,createdAt:new Date().toISOString(),history:[{date:new Date().toISOString(),text:'Pedido registado na aplicação.'}]})}
+ save();closeModal('editModal');toast(editingId?'Pedido atualizado.':'Pedido registado com sucesso.');
+};
+document.getElementById('deleteBtn').onclick=()=>{if(!editingId)return;const t=tickets.find(x=>x.id===editingId);if(confirm(`Eliminar o pedido ${t.ticket}? Esta ação não pode ser anulada.`)){tickets=tickets.filter(x=>x.id!==editingId);save();closeModal('editModal');toast('Pedido eliminado.')}};
+function detailRow(k,v,wide=false,copyVal=''){
+ const copyBtn = copyVal ? `<button class="btn-copy" onclick="copyToClipboard('${esc(copyVal)}', '${k}')">📋 Copiar</button>` : '';
+ return `<div class="detail ${wide?'wide':''}"><div class="k">${k}</div><div class="v"><span>${v||'—'}</span>${copyBtn}</div></div>`;
+}
+function showDetail(id){
+ const t=tickets.find(x=>x.id===id);if(!t)return;detailId=id;document.getElementById('detailTitle').textContent=t.ticket;
+ const phone=t.phone?`<a class="contact-link" href="tel:${esc(t.phone)}">${esc(t.phone)}</a>`:'—';
+ const email=t.email?`<a class="contact-link" href="mailto:${esc(t.email)}">${esc(t.email)}</a>`:'—';
+ const hist=(t.history||[]).slice().reverse().map(h=>`<div class="history-item"><time>${new Date(h.date).toLocaleString('pt-PT')}</time><p>${esc(h.text)}</p></div>`).join('')||'<div class="sub">Ainda não existem atualizações.</div>';
+ document.getElementById('detailBody').innerHTML=`
+ <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:15px"><span class="status ${statusClass(t.status)}">${esc(t.status)}</span><span class="sub">Aberto em ${fmt(t.date)}</span></div>
+ <div class="section-title">Equipamento e localização</div><div class="detail-grid">
+ ${detailRow('Tipo',esc(t.type))}${detailRow('Marca / Modelo',esc([t.brand,t.model].filter(Boolean).join(' · ')))}
+ ${detailRow('Número de série',esc(t.serial))}${detailRow('Órgão / Balcão',esc(t.branch))}
+ ${detailRow('Local / Morada',esc(t.location),true)}${detailRow('Avaria',esc(t.fault),true)}
+ </div><div class="section-title">Pessoa de contacto</div><div class="detail-grid">
+ ${detailRow('Nome',esc(t.contact))}${detailRow('Telefone',phone,false,t.phone)}${detailRow('Email',email,true,t.email)}
+ </div><div class="section-title">Acompanhamento</div><div class="detail-grid">
+ ${detailRow('Estado',esc(t.status))}${detailRow('Data de conclusão',fmt(t.closedDate))}
+ ${detailRow('Observações internas',esc(t.notes),true)}
+ </div><div class="section-title">Histórico de intervenções</div><div class="history">${hist}</div>
+ <div class="history-add"><textarea id="historyText" placeholder="Registar contacto, intervenção, atualização..."></textarea><button class="btn primary" id="addHistory">＋ Registar</button></div>`;
+ document.getElementById('detailModal').classList.add('open');
+ document.getElementById('addHistory').onclick=()=>{const input=document.getElementById('historyText'),text=input.value.trim();if(!text)return;t.history=t.history||[];t.history.push({date:new Date().toISOString(),text});t.updatedAt=new Date().toISOString();save();showDetail(id);toast('Atualização adicionada ao histórico.')};
+}
+document.getElementById('editFromDetail').onclick=()=>{const id=detailId;closeModal('detailModal');openEdit(id)};
+document.getElementById('search').addEventListener('input',render);
+document.getElementById('statusFilter').onchange=render;document.getElementById('districtFilter').onchange=render;
+function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
+document.getElementById('excelBtn').onclick=()=>{
+ const cols=[['Ticket SD','ticket'],['Data abertura','date'],['Estado','status'],['Tipo','type'],['Marca','brand'],['Modelo','model'],['N.º série','serial'],['Órgão / Balcão','branch'],['Local / Morada','location'],['Avaria','fault'],['Contacto','contact'],['Telefone','phone'],['Email','email'],['Data conclusão','closedDate'],['Observações','notes']];
+ const lines=[cols.map(c=>csvCell(c[0])).join(';'),...tickets.map(t=>cols.map(c=>csvCell(t[c[1]])).join(';'))];
+ const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});downloadBlob(blob,'BPI_Pedidos_SD.csv');toast('Ficheiro compatível com Excel exportado.');
+};
+function downloadBlob(blob,name){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+document.getElementById('exportBackupBtn').onclick=()=>{const blob=new Blob([JSON.stringify({app:'BPI Service Manager',version:1,exportedAt:new Date().toISOString(),tickets},null,2)],{type:'application/json'});downloadBlob(blob,'BPI_Service_Manager_Backup.json');toast('Backup criado. Guarda o ficheiro num local seguro.')};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text()),incoming=Array.isArray(parsed)?parsed:parsed.tickets;if(!Array.isArray(incoming))throw new Error('Formato inválido');if(!confirm(`Importar ${incoming.length} pedidos? Os pedidos com o mesmo ID serão substituídos; os restantes serão adicionados.`))return;const map=new Map(tickets.map(t=>[t.id,t]));incoming.forEach(t=>{if(t&&t.ticket){if(!t.id)t.id=uid();map.set(t.id,t)}});tickets=[...map.values()];save();toast('Backup importado com sucesso.')}catch(err){alert('Não foi possível importar este ficheiro. Confirma que é um backup JSON da aplicação.')}finally{e.target.value=''}};
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
+render();
+</script>
+</body>
+</html>
